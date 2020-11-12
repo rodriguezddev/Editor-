@@ -145,6 +145,10 @@
                             methods: {
                                 obtener(id){
                                     console.log(id)
+                                    var iframe = document.getElementById('my-iframe');
+                                if (iframe && iframe.contentWindow) {
+                                    iframe.contentWindow.postMessage(id, '*');
+                                }
                                 },
                                 sendToFrame(event) {
                                 var iframe = document.getElementById('my-iframe');

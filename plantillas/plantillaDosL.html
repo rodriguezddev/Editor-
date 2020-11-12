@@ -323,6 +323,7 @@
     <script>
 
    window.addEventListener('message', function(event) {
+       console.log(event.data)
     $('#my-message').css('background', event.data);
   
 }, false);
