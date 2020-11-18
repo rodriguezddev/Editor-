@@ -137,7 +137,8 @@
 <body>
     
 <div id="app">
-    <div style="position:fixed; top:0;     z-index: 9;     background: #fff; width: 100%;" id="my-message" >
+ <!--Menu-->
+    <div style="position:fixed; top:0;     z-index: 9;     background-color: #fff; width: 100%;" id="my-message" >
         <div id="menus" onclick="camb()" style="width: 99.4%; height: 6rem;">
             <div class="cont" style="display: flex; justify-content: space-between; align-items:center; position:fixed; top:10px; padding:0 1rem; width: 96%; height: 3rem; -webkit-box-shadow: 0px 19px 31px -23px rgba(0,0,0,0.75); -moz-box-shadow: 0px 19px 31px -23px rgba(0,0,0,0.75); box-shadow: 0px 19px 31px -23px rgba(0,0,0,0.75);">
                     
@@ -181,7 +182,9 @@
             </div>
         </div>
     </div>
-    <div class="hea" style="height: 80vh; margin-top: 6rem; max-width: 1300px;
+
+<!--Headaer-->
+    <div class="hea" id="carru" style="height: 80vh; margin-top: 6rem; max-width: 1300px;
     margin-left: auto;
     margin-right: auto; display: flex; justify-content: space-between; flex-direction:column;" id="header" onclick="header()">
         <div style="width: 100%;     align-items: center; display: flex; justify-content: space-between; height:100%;">
@@ -216,8 +219,11 @@
     </div>
    
     </div>
+    <div id="aqui">
+
+    </div>
     <div>
-            <div style="width: 100%;height: 150px; background:#F4F7F8; "></div>
+           
             <div id="menu" style="width: 300px; height: 100%; position: fixed; background-color: #fff;     top: 0;
             padding-top: 7rem; display:none">
                     <div style="margin-left:2rem;">
@@ -235,8 +241,10 @@
                     </div>
             </div>
     </div>
-   
-        <div class="reloj" id="produc" onclick="productos()" style="margin: -7rem 0rem 0rem;    padding: 1rem; display: flex; justify-content: space-around;  max-width: 1300px;">
+
+<!--Productos destacados-->
+    <div id="barrita" style="width: 100%;height: 150px; background:#F4F7F8; "></div>
+    <div class="reloj" id="produc" onclick="productos()" style="margin: -7rem 0rem 0rem;    padding: 1rem; display: flex; justify-content: space-around;  max-width: 1300px;">
 
             <div style="height:12rem; flex-basis:calc(20% - 4rem); background: #fff; -webkit-box-shadow: 0px 9px 30px -17px rgba(0,0,0,0.75);
             -moz-box-shadow: 0px 9px 30px -17px rgba(0,0,0,0.75);
@@ -262,8 +270,12 @@
                    </div> 
             </div>
             
-            </div>
-            <div  id="demasProd" onclick="demasProd()" style="padding: 1rem; margin-bottom: 3rem; margin-top:3rem; max-width: 1300px;
+    </div>
+    <div id="aquiD">
+    </div>
+
+    <!--Demas nproductos-->
+    <div  id="demasProd" onclick="demasProd()" style="padding: 1rem; margin-bottom: 3rem; margin-top:3rem; max-width: 1300px;
             margin-left: auto;
             margin-right: auto; ">
             <h4 style="font-family: 'Work Sans', sans-serif; margin-bottom: 1rem;">Televisores</h4>
@@ -296,8 +308,13 @@
                     
                     </div>
                 </div>
-                </div>
-                <div id="carrito" style="display:none;">
+    </div>
+    <div id="aquiT">
+    </div>
+
+
+
+    <div id="carrito" style="display:none;">
                         <div style="position: fixed; z-index: 4; height: 400px;  width: 260px; background: rgba(255, 255, 255, 0.77);
                         box-shadow: 0px 16px 39px rgba(0, 0, 0, 0.09);
                         backdrop-filter: blur(44px); top: 6rem; right: 3rem; border-radius: 1rem; padding: 1rem; padding-right: 0rem; ">
@@ -311,7 +328,7 @@
                             <p style="margin: 0; font-family: galano; padding: 1rem; font-size: 15px; flex-basis: calc(50% - 1rem); text-align: end;">S/.65.2</p>
                         </div>
                                 
-                      </div>
+    </div>
         </div>
 
     <script src="/Nueva carpeta (2)/bootstrap/js/bootstrap.min.js"></script>
@@ -324,8 +341,7 @@
 
    window.addEventListener('message', function(event) {
        console.log(event.data)
-    $('#my-message').css('background', event.data);
-  
+         
 }, false);
      
         </script>
