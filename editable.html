@@ -67,9 +67,9 @@
                             <p style="font-family: helvetica; margin: 0rem; font-size: 12px;">Secciones</p>
                         </div>
 
-                        <div style="margin-top:3rem;" id="mover">
-                            <div  class="cambio" v-for="item in options" v-on:click="sortable(), obtener(item)" style="display:flex; justify-content: space-between; background:#fff; margin: 0.5rem 0px; padding: 0.5rem;  box-shadow: 0px 1px 14px -8px rgba(126,126,126,1);">
-                                <div style="display:flex; align-items: center;" >
+                        <div class="soloAqui" style="margin-top:3rem;" id="mover" >
+                            <div  class="cambio" v-for="item in options" v-on:drag="sortable()" @mousedown="obtener(item), unaVez(item)" v-on:drop="enviar()"  style="display:flex; justify-content: space-between; background:#fff; margin: 0.5rem 0px; padding: 0.5rem;  box-shadow: 0px 1px 14px -8px rgba(126,126,126,1);">
+                                <div style="display:flex; align-items: center;"  v-on:change="movi()">
                                     <img :src="item.img" style="width: 25px; margin-right: 1rem;" alt="">
                                     <p style="font-family: helvetica; margin: 0rem; font-size: 15px;">{{item.name}}</p>
                                 </div>
@@ -114,8 +114,14 @@
                                     {
                                         name:'Menu',
                                         img: 'SVG NO EMBEBIDO/lista 1.svg',
+                                        id:0,
+                                        
+                                    },
+                                    {
+                                        name:'Slider de imagenes',
+                                        img: 'SVG NO EMBEBIDO/imagen 1.svg',
                                         id:1,
-                                        html:` <div class="hea" style="height: 80vh; margin-top: 6rem; max-width: 1300px;
+                                        html:` <div class="hea"  style="height: 80vh; margin-top: 6rem; max-width: 1300px;
                                             margin-left: auto;
                                             margin-right: auto; display: flex; justify-content: space-between; flex-direction:column;" id="header" onclick="header()">
                                                 <div style="width: 100%;     align-items: center; display: flex; justify-content: space-between; height:100%;">
@@ -152,8 +158,8 @@
                                             </div>`
                                     },
                                     {
-                                        name:'Slider de imagenes',
-                                        img: 'SVG NO EMBEBIDO/imagen 1.svg',
+                                        name:'Productos destacados',
+                                        img: 'SVG NO EMBEBIDO/zapatos 1.svg',
                                         id:2,
                                         html:`<div style="width: 100%;height: 150px; background:#F4F7F8; "></div>
                                              <div class="reloj"  onclick="productos()" style="margin: -7rem 0rem 0rem;    padding: 1rem; display: flex; justify-content: space-around;  max-width: 1300px;">
@@ -183,8 +189,8 @@
                                                 </div> `
                                     },
                                     {
-                                        name:'Productos destacados',
-                                        img: 'SVG NO EMBEBIDO/zapatos 1.svg',
+                                        name:'Productos: Televisores',
+                                        img: 'SVG NO EMBEBIDO/zanahoria.svg',
                                         id:3,
                                         html:`<div  onclick="demasProd()" style="padding: 1rem; margin-bottom: 3rem; margin-top:3rem; max-width: 1300px;
                                                         margin-left: auto;
@@ -220,57 +226,130 @@
                                                                 </div>
                                                             </div>
                                                             </div>`
-                                    },
-                                    {
-                                        name:'Productos: Televisores',
-                                        img: 'SVG NO EMBEBIDO/zanahoria.svg',
-                                        id:4
                                     },  
                                     {
                                         name:'Productos: Celulares',
                                         img: 'SVG NO EMBEBIDO/zanahoria.svg',
-                                        id:5
+                                        id:4
                                     },  
                                     {
                                         name:'Pie de página',
                                         img: 'SVG NO EMBEBIDO/pie-de-pagina 1.svg',
-                                        id:6
+                                        id:5
                                     },
                                 ],
-                                init:0,
-                                fin:0
+                                init:9,
+                                fin:8,
+                                datosN:[],
+                                items:{},
+                                movidoD: [],
+                                movidoU: [],
+                                Cclick: 0,
+                                itemUno:[]
                             },
                             methods: {
                                 sortable(){
                                     
-                                   const sort =  new Sortable(mover, {
+                                    var valorUno =  localStorage.getItem('inicio')
+                                    var valorDos = localStorage.getItem('final')
+                                    var valorMovidoU = localStorage.getItem('movidoUno');
+                                    var valorMovidoD = localStorage.getItem('movidoDos');
+                                    
+                                    
+
+                                    this.init = valorUno
+                                    this.fin = valorDos
+                                    this.movidoU = JSON.parse(valorMovidoU)
+                                    this.movidoD = JSON.parse(valorMovidoD)
+
+                                    
+                                },
+                                unaVez(itemUnos){
+                                    
+                                    this.itemUno.push(
+                                        itemUnos.id
+                                    )
+                                    console.log('solo una vez',this.itemUno)
+                                    localStorage.setItem('idUno', JSON.stringify(this.itemUno))   
+                         
+                                },
+                                obtener(item){
+                                   this.items = item
+                                   
+                                },
+                                enviar(){
+                                    console.log(this.init, this.fin)
+                                    this.Cclick = this.Cclick + 1
+                                    this.datosN.push({
+                                        init: this.init,
+                                        fin: this.fin,
+                                        item: this.items,
+                                        movidoU: this.movidoU,
+                                        movidoD: this.movidoD,
+                                        Cclick:this.Cclick
+                                    })
+                                    var iframe = document.getElementById('my-iframe');
+                                        if (iframe && iframe.contentWindow) {
+                                            iframe.contentWindow.postMessage(this.datosN,'*');
+                                        }
+                                        
+                                        this.datosN = []
+                                        
+                                        console.log(this.datosN, this.itemUno)
+                                        console.log(this.init, this.fin)
+                                },
+                                movi(){
+                                    console.log('me he movido')
+                                }
+                            },
+                            created(){
+                                localStorage.removeItem('final');
+                                localStorage.removeItem('inicio');
+                                localStorage.removeItem('movidoUno');
+                                localStorage.removeItem('movidoDos');
+                                localStorage.removeItem('valorsillo');
+                                localStorage.removeItem('valorsilloD');
+                                localStorage.removeItem('idUno');
+                                }
+        })
+    </script>
+ 
+        <script>
+          const sort =  new Sortable(mover, {
                                     animation: 150,
                                     group:  'shared',
                                     onChoose: function(evento, ini)  {
                                        ini = evento.oldIndex
                                         console.log('Se ha seleccionado un elemento', ini)
+                                        localStorage.setItem('inicio', ini)
                                     },
                                     onChange: function(evento, fi)  { 
                                         evento.newIndex;   
                                        fi = evento.newIndex
                                         console.log('Se ha cambiado un elemento', fi)
+                                        localStorage.setItem('final', fi)
                                     }, 
+                                    onMove: function (/**Event*/ evt, /**Event*/ originalEvent) {
+                                    // Example: https://jsbin.com/nawahef/edit?js,output
+                                    console.log(evt.dragged); // dragged HTMLElement
+                                    console.log(evt.related); // HTMLElement on which have guided
+                                    var itemU = evt.dragged
+                                    var itemD = evt.related
+                                    var movidoUno = []
+                                    var movidoDos = []
+                                    
+                                    movidoUno.push(
+                                        itemU
+                                    )
+
+                                    movidoDos.push(
+                                        itemD
+                                    )
+                                    localStorage.setItem('movidoUno', JSON.stringify(movidoUno));   
+                                    localStorage.setItem('movidoDos', JSON.stringify(movidoDos)); 
+                                },
                                     
                                     });
-                                    console.log(sort.options.onChoose)
-                                },
-                                obtener(item){
-                                    console.log(this.init, this.fin)
-                                    var iframe = document.getElementById('my-iframe');
-                                        if (iframe && iframe.contentWindow) {
-                                            iframe.contentWindow.postMessage(item,'*');
-                                        }
-                                },
-                            }
-        })
-    </script>
-        <script>
-            
         </script>
         
         <script>
